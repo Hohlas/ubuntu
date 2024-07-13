@@ -34,8 +34,8 @@ nano /etc/fstab
 ```
 ### swap partition
 ```bash
-DEVICE="/dev/nvme3n1"
-MOUNT_DIR='disk3'
+DEVICE="/dev/nvme2n1"
+MOUNT_DIR='disk2'
 SWAP_SIZE='100'
 ```
 ```bash
