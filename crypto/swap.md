@@ -3,18 +3,31 @@
 
 ### swap1
 ```bash
-if [ ! -e /swapfile ]; then
-echo -e '\n\e[42m make SWAP \e[0m\n'
-fallocate -l 300G /swapfile
-chmod 600 /swapfile
-mkswap /swapfile
-swapon /swapfile 
-echo "
+if [ -e /swapfile ]; then
+    SWAP_SIZE=$(swapon --show --noheadings --bytes | awk '{print $3}')
+    if [ $SWAP_SIZE -lt $((300 * 1024 * 1024 * 1024)) ]; then
+        echo -e '\n\e[42m Увеличение размера SWAP \e[0m\n'
+        fallocate -l 300G /swapfile2
+        chmod 600 /swapfile2
+        mkswap /swapfile2
+        swapon /swapfile2
+        echo "
 # add SWAP
 /swapfile2 none swap sw 0 0
 " | sudo tee -a /etc/fstab
+    else
+        echo -e '\n\e[42m SWAP достаточного размера \e[0m\n'
+    fi
 else
-echo -e '\n\e[42m SWAP already exist \e[0m\n'
+    echo -e '\n\e[42m Создание SWAP \e[0m\n'
+    fallocate -l 300G /swapfile
+    chmod 600 /swapfile
+    mkswap /swapfile
+    swapon /swapfile
+    echo "
+# add SWAP
+/swapfile none swap sw 0 0
+" | sudo tee -a /etc/fstab
 fi
 ```
 ### swap2
