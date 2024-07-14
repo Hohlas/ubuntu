@@ -3,31 +3,26 @@
 
 ### swap1
 ```bash
-if [ -e /swapfile ]; then
-    SWAP_SIZE=$(swapon --show --noheadings --bytes | awk '{print $3}')
-    if [ $SWAP_SIZE -lt $((300 * 1024 * 1024 * 1024)) ]; then
-        echo -e '\n\e[42m Увеличение размера SWAP \e[0m\n'
-        fallocate -l 300G /swapfile2
-        chmod 600 /swapfile2
-        mkswap /swapfile2
-        swapon /swapfile2
-        echo "
-# add SWAP
-/swapfile2 none swap sw 0 0
-" | sudo tee -a /etc/fstab
-    else
-        echo -e '\n\e[42m SWAP достаточного размера \e[0m\n'
-    fi
+echo -e '\n\e[42m create SWAP \e[0m\n'	
+SWAP_SIZE=300 # required SWAP size
+MIN_DIFFERENCE=1
+CURRENT_SWAP_SIZE=$(free -g | awk '/^Swap:/ {print $2}')
+ADDITIONAL_SWAP=$((SWAP_SIZE - CURRENT_SWAP_SIZE))
+if [ "$ADDITIONAL_SWAP" -gt "$MIN_DIFFERENCE" ]; then
+    echo -e " current SWAP size\033[32m ${CURRENT_SWAP_SIZE}G \033[0m"
+	echo -e " create additional SWAP\033[32m ${ADDITIONAL_SWAP}G \033[0m"
+    command_output=$(fallocate -l ${ADDITIONAL_SWAP}G /swapfile2) 
+	command_exit_status=$?
+	if [ $command_exit_status -ne 0 ]; then
+		echo -e "\033[31m can't create swapfile2 \033[0m"
+	else
+		chmod 600 /swapfile2
+		mkswap /swapfile2
+		swapon /swapfile2
+		echo "/swapfile2 none swap sw 0 0" | sudo tee -a /etc/fstab
+	fi
 else
-    echo -e '\n\e[42m Создание SWAP \e[0m\n'
-    fallocate -l 300G /swapfile
-    chmod 600 /swapfile
-    mkswap /swapfile
-    swapon /swapfile
-    echo "
-# add SWAP
-/swapfile none swap sw 0 0
-" | sudo tee -a /etc/fstab
+    echo -e " current SWAP size\033[32m $CURRENT_SWAP_SIZE\033[0m enough "
 fi
 ```
 ### swap2
