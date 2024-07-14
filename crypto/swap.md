@@ -9,9 +9,9 @@ MIN_DIFFERENCE=1
 CURRENT_SWAP_SIZE=$(free -g | awk '/^Swap:/ {print $2}')
 ADDITIONAL_SWAP=$((SWAP_SIZE - CURRENT_SWAP_SIZE))
 if [ "$ADDITIONAL_SWAP" -gt "$MIN_DIFFERENCE" ]; then
-    echo -e " current SWAP size\033[32m ${CURRENT_SWAP_SIZE}G \033[0m"
+	echo -e " current SWAP size\033[32m ${CURRENT_SWAP_SIZE}G \033[0m"
 	echo -e " create additional SWAP\033[32m ${ADDITIONAL_SWAP}G \033[0m"
-    command_output=$(fallocate -l ${ADDITIONAL_SWAP}G /swapfile2) 
+	command_output=$(fallocate -l ${ADDITIONAL_SWAP}G /swapfile2) 
 	command_exit_status=$?
 	if [ $command_exit_status -ne 0 ]; then
 		echo -e "\033[31m can't create swapfile2 \033[0m"
@@ -22,7 +22,7 @@ if [ "$ADDITIONAL_SWAP" -gt "$MIN_DIFFERENCE" ]; then
 		echo "/swapfile2 none swap sw 0 0" | sudo tee -a /etc/fstab
 	fi
 else
-    echo -e " current SWAP size\033[32m $CURRENT_SWAP_SIZE\033[0m enough "
+	echo -e " current SWAP size\033[32m $CURRENT_SWAP_SIZE\033[0m enough "
 fi
 ```
 ### swap2
