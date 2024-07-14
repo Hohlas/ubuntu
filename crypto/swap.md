@@ -12,7 +12,7 @@ if [ "$ADDITIONAL_SWAP" -gt "$MIN_DIFFERENCE" ]; then
 	echo -e " current SWAP size\033[32m ${CURRENT_SWAP_SIZE}G \033[0m"
 	echo -e " create additional SWAP\033[32m ${ADDITIONAL_SWAP}G \033[0m"
 	command_output=$(fallocate -l ${ADDITIONAL_SWAP}G /swapfile2) 
-	command_exit_status=$?
+	command_exit_status=$? #
 	if [ $command_exit_status -ne 0 ]; then
 		echo -e "\033[31m can't create swapfile2 \033[0m"
 	else
