@@ -1,10 +1,11 @@
 ## SWAP
 
-
+```bash
+SWAP_SIZE=200 # required SWAP siz
+```
 ### swap1
 ```bash
 echo -e '\n\e[42m create SWAP \e[0m\n'	
-SWAP_SIZE=300 # required SWAP size
 MIN_DIFFERENCE=1
 CURRENT_SWAP_SIZE=$(free -g | awk '/^Swap:/ {print $2}')
 ADDITIONAL_SWAP=$((SWAP_SIZE - CURRENT_SWAP_SIZE))
@@ -28,7 +29,7 @@ fi
 ### swap2
 ```bash
 swapoff -a   
-dd if=/dev/zero of=/swapfile bs=1G count=300
+dd if=/dev/zero of=/swapfile bs=1G count=$SWAP_SIZE
 chmod 600 /swapfile #  
 mkswap /swapfile
 swapon /swapfile       
