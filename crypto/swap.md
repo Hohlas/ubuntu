@@ -1,7 +1,10 @@
 ## SWAP
 
 ```bash
-SWAP_SIZE=200 # required SWAP siz
+free -h # check current SWAP size
+```
+```bash
+SWAP_SIZE=200 # required SWAP size
 ```
 ### swap1
 ```bash
