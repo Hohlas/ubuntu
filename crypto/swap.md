@@ -6,7 +6,9 @@ free -h # check current SWAP size
 ```bash
 SWAP_SIZE=200 # required SWAP size
 ```
-### swap1
+<details>
+<summary>create swapfile1</summary>
+	
 ```bash
 echo -e '\n\e[42m create SWAP \e[0m\n'	
 MIN_DIFFERENCE=1
@@ -29,7 +31,12 @@ else
 	echo -e " current SWAP size\033[32m $CURRENT_SWAP_SIZE\033[0m enough "
 fi
 ```
-### swap2
+
+</details>
+
+<details>
+<summary>create swapfile2</summary>
+	
 ```bash
 swapoff -a   
 dd if=/dev/zero of=/swapfile bs=1G count=$SWAP_SIZE
@@ -44,7 +51,21 @@ free -h
 swapon --show 
 nano /etc/fstab 
 ```
-### swap partition
+
+</details>
+
+<details>
+<summary>create swap partition</summary>
+
+```bash
+mkswap /dev/nvme2n1p2 # format as swap
+/dev/disk/by-uuid/<uuid> none swap sw,pri=10 0 0 # add to fstab
+# swapoff -a
+swapon -a
+swapon --show
+```
+
+### swap partition script
 ```bash
 DEVICE="/dev/nvme2n1"
 MOUNT_DIR='disk2'
@@ -93,3 +114,5 @@ echo "Проверка разделов..."
 lsblk $DEVICE
 swapon --show
 ```
+
+</details>
