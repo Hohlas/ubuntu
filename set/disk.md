@@ -36,20 +36,19 @@ sudo mount -a
 
 ```bash
 echo "Delete all partitions from $DEVICE..."
-sudo umount ${DEVICE}* # Отмонтируем все разделы, если они смонтированы
-swapoff ${DEVICE}* # Отмонтируем все свапы на этом диске
-sudo parted --script $DEVICE mklabel gpt  # Создаем новую таблицу разделов GPT
+umount ${DEVICE}* # Отмонтируем все разделы, если они смонтированы
+swapoff -a # Отмонтируем все свапы 
+parted --script $DEVICE mklabel gpt  # Создаем новую таблицу разделов GPT
 
 echo "create SWAP=${SWAP_SIZE}G..."
-sudo parted -a optimal $DEVICE mkpart primary linux-swap 0% ${SWAP_SIZE}G
+parted -a optimal $DEVICE mkpart primary linux-swap 0% ${SWAP_SIZE}G
 SWAP_PART="${DEVICE}p1"  # Пусть это первый раздел
-sudo mkswap $SWAP_PART
-sudo swapon $SWAP_PART # Активируем SWAP
+mkswap $SWAP_PART
 
 echo "create $FILE_SYSTEM partition"
-sudo parted -a optimal $DEVICE mkpart primary $FILE_SYSTEM ${SWAP_SIZE}G 100%
+parted -a optimal $DEVICE mkpart primary $FILE_SYSTEM ${SWAP_SIZE}G 100%
 MAIN_PART="${DEVICE}p2"
-sudo mkfs."$FILE_SYSTEM" "$MAIN_PART"
+mkfs."$FILE_SYSTEM" "$MAIN_PART"
 
 SWAP_UUID=$(sudo blkid -s UUID -o value $SWAP_PART)
 MAIN_UUID=$(sudo blkid -s UUID -o value $MAIN_PART)
@@ -57,8 +56,9 @@ printf "\n\n" | sudo tee -a /etc/fstab  # добавление пустых ст
 echo "UUID=$SWAP_UUID none swap sw,pri=1 0 0" | sudo tee -a /etc/fstab
 echo "UUID=$MAIN_UUID $MOUNT_POINT $FILE_SYSTEM defaults 0 0" | sudo tee -a /etc/fstab
 
-sudo mkdir -p $MOUNT_POINT
-sudo mount -a  # Монтируем все из fstab
+mkdir -p $MOUNT_POINT
+swapon -a # Активируем SWAPы
+mount -a  # Монтируем все из fstab
 ```
 
 <details>
