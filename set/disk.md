@@ -1,12 +1,5 @@
 ## create and mount partitions
 ```bash
-mkdir -p $HOME/solana/ledger  # ln -sf /mnt/disk2/ledger ~/solana
-mkdir -p /mnt/disk1/accounts
-mkdir -p /mnt/disk2/accounts_index
-mkdir -p /mnt/disk3/accounts_hash_cache #
-# ln -sf /mnt/disk2 /mnt/disk3 # для трех дисков
-```
-```bash
 mkdir -p /mnt/keys
 chmod 600 /mnt/keys 
 echo "# KEYS to RAMDISK 
@@ -22,9 +15,9 @@ fdisk /dev/nvme1n1 #
   # w # write changes
 ```
 ```bash
-DEVICE="/dev/nvme0n1p2"  # Замените на ваше устройство
-MOUNT_POINT="/mnt/disk1"  # Замените на желаемую точку монтирования
-FILE_SYSTEM="xfs"  
+DEVICE="/dev/nvme0n1p2"  # DEVICE="/dev/nvme1n1p2"
+MOUNT_POINT="/mnt/disk1"  # MOUNT_POINT="/mnt/disk2" 
+FILE_SYSTEM="xfs"  # FILE_SYSTEM="ext4"
 ```
 ```bash
 if [ ! -d "$MOUNT_POINT" ]; then mkdir -p "$MOUNT_POINT"; fi
@@ -32,7 +25,6 @@ sudo mkfs."$FILE_SYSTEM" "$DEVICE"
 UUID=$(blkid -s UUID -o value "$DEVICE")
 echo "UUID=$UUID $MOUNT_POINT $FILE_SYSTEM defaults 0 0" | sudo tee -a /etc/fstab
 sudo mount -a
-
 ```
 
 
@@ -41,35 +33,21 @@ sudo mount -a
 ## SWAP
 
 ```bash
-free -h # check current SWAP size
+swapon --show # check current SWAP size
 ```
 ```bash
-SWAP_SIZE=200 # required SWAP size
+SWAP_SIZE=100 # required SWAP size
 ```
 <details>
-<summary>create swapfile1</summary>
+<summary>create swapfile2</summary>
 	
 ```bash
 echo -e '\n\e[42m create SWAP \e[0m\n'	
-MIN_DIFFERENCE=1
-CURRENT_SWAP_SIZE=$(free -g | awk '/^Swap:/ {print $2}')
-ADDITIONAL_SWAP=$((SWAP_SIZE - CURRENT_SWAP_SIZE))
-if [ "$ADDITIONAL_SWAP" -gt "$MIN_DIFFERENCE" ]; then
-	echo -e " current SWAP size\033[32m ${CURRENT_SWAP_SIZE}G \033[0m"
-	echo -e " create additional SWAP\033[32m ${ADDITIONAL_SWAP}G \033[0m"
-	command_output=$(fallocate -l ${ADDITIONAL_SWAP}G /swapfile2) 
-	command_exit_status=$? #
-	if [ $command_exit_status -ne 0 ]; then
-		echo -e "\033[31m can't create swapfile2 \033[0m"
-	else
-		chmod 600 /swapfile2
-		mkswap /swapfile2
-		swapon /swapfile2
-		echo "/swapfile2 none swap sw 0 0" | sudo tee -a /etc/fstab
-	fi
-else
-	echo -e " current SWAP size\033[32m $CURRENT_SWAP_SIZE\033[0m enough "
-fi
+fallocate -l ${SWAP_SIZE}G /swapfile2
+chmod 600 /swapfile2
+mkswap /swapfile2
+swapon /swapfile2
+echo "/swapfile2 none swap sw,pri=1 0 0" | sudo tee -a /etc/fstab
 ```
 
 </details>
