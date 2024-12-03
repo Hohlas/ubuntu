@@ -39,15 +39,15 @@ swapon --show # check current SWAP size
 SWAP_SIZE=100 # required SWAP size
 ```
 <details>
-<summary>create swapfile2</summary>
+<summary>create swapfile1</summary>
 	
 ```bash
 echo -e '\n\e[42m create SWAP \e[0m\n'	
-fallocate -l ${SWAP_SIZE}G /swapfile2
-chmod 600 /swapfile2
-mkswap /swapfile2
-swapon /swapfile2
-echo "/swapfile2 none swap sw,pri=1 0 0" | sudo tee -a /etc/fstab
+fallocate -l ${SWAP_SIZE}G /swapfile1
+chmod 600 /swapfile1
+mkswap /swapfile1
+swapon /swapfile1
+echo "/swapfile1 none swap sw,pri=1 0 0" | sudo tee -a /etc/fstab
 ```
 
 </details>
