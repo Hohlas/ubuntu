@@ -80,13 +80,13 @@ echo "/swapfile1 none swap sw,pri=1 0 0" | sudo tee -a /etc/fstab
 <summary>create swapfile2</summary>
 	
 ```bash
-swapoff -a   
 dd if=/dev/zero of=/swapfile bs=1G count=$SWAP_SIZE
 chmod 600 /swapfile #  
-mkswap /swapfile
-swapon /swapfile       
+mkswap /swapfile     
 printf "\n\n" | sudo tee -a /etc/fstab  # добавление пустых строк
 echo "/swapfile none swap sw,pri=1 0 0" | sudo tee -a /etc/fstab
+swapoff -a 
+swapon -a # Активируем SWAPы
 swapon --show 
 ```
 
