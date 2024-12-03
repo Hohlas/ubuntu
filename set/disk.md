@@ -18,7 +18,7 @@ fdisk ${DEVICE} #
   # d - delete 
   # n - create
   # w - write changes
-sudo mkfs.xfs "${DEVICE}"
+mkfs.xfs "${DEVICE}" # mkfs.ext4 "${DEVICE}"
 UUID=$(blkid -s UUID -o value "$DEVICE")
 echo "UUID=$UUID $MOUNT_POINT xfs defaults 0 0" | sudo tee -a /etc/fstab
 sudo mount -a
@@ -94,7 +94,7 @@ swapon --show
 
 ```bash
 mkswap /dev/nvme2n1p2 # format as swap
-/dev/disk/by-uuid/<uuid> none swap sw,pri=10 0 0 # add to fstab
+/dev/disk/by-uuid/<uuid> none swap sw,pri=1 0 0 # add to fstab
 swapoff -a
 swapon -a
 swapon --show
