@@ -65,13 +65,14 @@ mount -a  # Монтируем все из fstab
 <summary>create swapfile1</summary>
 	
 ```bash
-echo -e '\n\e[42m create SWAP \e[0m\n'	
 fallocate -l ${SWAP_SIZE}G /swapfile1
 chmod 600 /swapfile1
 mkswap /swapfile1
-swapon /swapfile1
 printf "\n\n" | sudo tee -a /etc/fstab  # добавление пустых строк
 echo "/swapfile1 none swap sw,pri=1 0 0" | sudo tee -a /etc/fstab
+swapoff -a
+swapon -a
+swapon --show
 ```
 
 </details>
@@ -98,7 +99,7 @@ swapon --show
 ```bash
 mkswap /dev/nvme2n1p2 # format as swap
 /dev/disk/by-uuid/<uuid> none swap sw,pri=10 0 0 # add to fstab
-# swapoff -a
+swapoff -a
 swapon -a
 swapon --show
 ```
