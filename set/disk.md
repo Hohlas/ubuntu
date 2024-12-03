@@ -70,6 +70,7 @@ fallocate -l ${SWAP_SIZE}G /swapfile1
 chmod 600 /swapfile1
 mkswap /swapfile1
 swapon /swapfile1
+printf "\n\n" | sudo tee -a /etc/fstab  # добавление пустых строк
 echo "/swapfile1 none swap sw,pri=1 0 0" | sudo tee -a /etc/fstab
 ```
 
@@ -84,13 +85,9 @@ dd if=/dev/zero of=/swapfile bs=1G count=$SWAP_SIZE
 chmod 600 /swapfile #  
 mkswap /swapfile
 swapon /swapfile       
-echo "
-# SWAP
-/swapfile none swap sw 0 0
-" | sudo tee -a /etc/fstab
-free -h  
+printf "\n\n" | sudo tee -a /etc/fstab  # добавление пустых строк
+echo "/swapfile none swap sw,pri=1 0 0" | sudo tee -a /etc/fstab
 swapon --show 
-nano /etc/fstab 
 ```
 
 </details>
