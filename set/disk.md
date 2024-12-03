@@ -14,7 +14,26 @@ tmpfs /mnt/keys tmpfs nodev,nosuid,noexec,nodiratime,size=1M 0 0" | sudo tee -a 
 mount /mnt/keys 
 ln -sf /mnt/keys ~/keys
 ```
+```bash
+lsblk -f # check MOUNTPOINTS 
+fdisk /dev/nvme1n1 #
+  # d # delete 
+  # n # create new. 'ENTER' by default. 
+  # w # write changes
+```
+```bash
+DEVICE="/dev/nvme0n1p2"  # Замените на ваше устройство
+MOUNT_POINT="/mnt/disk1"  # Замените на желаемую точку монтирования
+FILE_SYSTEM="xfs"  
+```
+```bash
+if [ ! -d "$MOUNT_POINT" ]; then mkdir -p "$MOUNT_POINT"; fi
+sudo mkfs."$FILE_SYSTEM" "$DEVICE"
+UUID=$(blkid -s UUID -o value "$DEVICE")
+echo "UUID=$UUID $MOUNT_POINT $FILE_SYSTEM defaults 0 0" | sudo tee -a /etc/fstab
+sudo mount -a
 
+```
 
 
 
