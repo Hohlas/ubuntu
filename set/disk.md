@@ -18,13 +18,12 @@ fdisk /dev/nvme1n1 #
   # w - write changes
 ```
 ```bash
-DEVICE="/dev/nvme0"  # DEVICE="/dev/nvme1n1p2"
+DEVICE="/dev/nvme0n1"  # DEVICE="/dev/nvme1n1p2"
 MOUNT_POINT="/mnt/disk1"  # MOUNT_POINT="/mnt/disk2" 
 FILE_SYSTEM="xfs"  # FILE_SYSTEM="ext4"
 SWAP_SIZE=100 # required SWAP size
 ```
 ```bash
-if [ ! -d "$MOUNT_POINT" ]; then mkdir -p "$MOUNT_POINT"; fi
 sudo mkfs."$FILE_SYSTEM" "$DEVICE"
 UUID=$(blkid -s UUID -o value "$DEVICE")
 echo "UUID=$UUID $MOUNT_POINT $FILE_SYSTEM defaults 0 0" | sudo tee -a /etc/fstab
@@ -42,13 +41,13 @@ sudo parted $DEVICE mklabel gpt  # Создаем новую таблицу ра
 
 echo "create SWAP=${SWAP_SIZE}G..."
 sudo parted -a optimal $DEVICE mkpart primary linux-swap 0% ${SWAP_SIZE}G
-SWAP_PART="${DEVICE}1"  # Пусть это первый раздел
+SWAP_PART="${DEVICE}p1"  # Пусть это первый раздел
 sudo mkswap $SWAP_PART
 sudo swapon $SWAP_PART # Активируем SWAP
 
 echo "create $FILE_SYSTEM partition"
 sudo parted -a optimal $DEVICE mkpart primary $FILE_SYSTEM ${SWAP_SIZE}G 100%
-MAIN_PART="${DEVICE}2"
+MAIN_PART="${DEVICE}p2"
 sudo mkfs."$FILE_SYSTEM" "$MAIN_PART"
 
 SWAP_UUID=$(sudo blkid -s UUID -o value $SWAP_PART)
