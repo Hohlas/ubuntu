@@ -18,13 +18,13 @@ fdisk /dev/nvme1n1 #
   # w - write changes
 ```
 ```bash
-DEVICE="/dev/nvme0n1"  # DEVICE="/dev/nvme1n1p2"
+DEVICE="/dev/nvme0n1"  # DEVICE="/dev/nvme1n1"
 MOUNT_POINT="/mnt/disk1"  # MOUNT_POINT="/mnt/disk2" 
 FILE_SYSTEM="xfs"  # FILE_SYSTEM="ext4"
 SWAP_SIZE=100 # required SWAP size
 ```
 ```bash
-sudo mkfs."$FILE_SYSTEM" "$DEVICE"
+sudo mkfs."$FILE_SYSTEM" "${DEVICE}p2"
 UUID=$(blkid -s UUID -o value "$DEVICE")
 echo "UUID=$UUID $MOUNT_POINT $FILE_SYSTEM defaults 0 0" | sudo tee -a /etc/fstab
 sudo mount -a
