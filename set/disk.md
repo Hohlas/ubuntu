@@ -52,8 +52,9 @@ MAIN_PART="${DEVICE}p2"
 sudo mkfs."$FILE_SYSTEM" "$MAIN_PART"
 
 SWAP_UUID=$(sudo blkid -s UUID -o value $SWAP_PART)
-echo "UUID=$SWAP_UUID none swap sw,pri=1 0 0" | sudo tee -a /etc/fstab
 MAIN_UUID=$(sudo blkid -s UUID -o value $MAIN_PART)
+echo "" | sudo tee -a /etc/fstab # add new line
+echo "UUID=$SWAP_UUID none swap sw,pri=1 0 0" | sudo tee -a /etc/fstab
 echo "UUID=$MAIN_UUID $MOUNT_POINT $FILE_SYSTEM defaults 0 0" | sudo tee -a /etc/fstab
 
 sudo mkdir -p $MOUNT_POINT
