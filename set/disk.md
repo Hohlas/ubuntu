@@ -37,6 +37,7 @@ sudo mount -a
 ```bash
 echo "Delete all partitions from $DEVICE..."
 sudo umount ${DEVICE}* # Отмонтируем все разделы, если они смонтированы
+swapoff ${DEVICE}* # Отмонтируем все свапы на этом диске
 sudo parted $DEVICE mklabel gpt  # Создаем новую таблицу разделов GPT
 
 echo "create SWAP=${SWAP_SIZE}G..."
