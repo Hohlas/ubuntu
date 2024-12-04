@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "run (iostat -d) for all nvme for 10 sec" 
+echo "  - iostat average.10s -" 
 
 num_requests=10 # Количество запросов
 
