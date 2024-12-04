@@ -1,7 +1,7 @@
 #!/bin/bash
+echo "run (iostat -d) for all nvme for 10 sec" 
 
-# Количество запросов
-num_requests=10
+num_requests=10 # Количество запросов
 
 # Инициализация ассоциативных массивов для суммирования
 declare -A total_tps
