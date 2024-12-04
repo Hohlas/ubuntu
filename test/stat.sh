@@ -41,5 +41,8 @@ for device in "${devices[@]}"; do
     # Рассчитываем tps*(r+w)
     tps_rw=$(echo "scale=2; $average_tps * ($average_kB_read_per_s + $average_kB_wrtn_per_s)" | bc)
 
-    printf "%-15s %-10s %-12s %-12s %-12s\n" "$device" "$average_tps" "$average_kB_read_per_s" "$average_kB_wrtn_per_s" "$tps_rw"
+    # Делим на 100000 и округляем до целого числа
+    tps_rw_rounded=$(printf "%.0f" $(echo "$tps_rw / 100000" | bc))
+
+    printf "%-15s %-10s %-12s %-12s %-12s\n" "$device" "$average_tps" "$average_kB_read_per_s" "$average_kB_wrtn_per_s" "$tps_rw_rounded"
 done
