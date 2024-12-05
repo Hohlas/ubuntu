@@ -1,48 +1,26 @@
 #!/bin/bash
-echo "  - iostat average.10s -" 
 
-num_requests=10 # Количество запросов
+# echo "  - iostat single request with tps_rw_rounded and %util -"
 
-# Инициализация ассоциативных массивов для суммирования
-declare -A total_tps
-declare -A total_kB_read_per_s
-declare -A total_kB_wrtn_per_s
-declare -A count_tps
-devices=()  # Массив для хранения имен устройств
+# Получаем вывод команды iostat -d для nvme устройств
+output=$(iostat -d 1 1 | awk '/^nvme/ {print $1, $2, $3, $4}')
 
-# Выполняем iostat несколько раз
-for ((i = 1; i <= num_requests; i++)); do
-    # Получаем вывод команды iostat и извлекаем данные для nvme устройств
-    output=$(iostat -d 1 1 | awk '/^nvme/ {print $1, $2, $3, $4}')
-    sleep 1
-    
-    # Читаем значения для каждого nvme устройства
-    while read -r device tps kB_read_per_s kB_wrtn_per_s; do
-        # Сохраняем имя устройства в массиве devices только один раз
-        if [[ ! " ${devices[@]} " =~ " ${device} " ]]; then
-            devices+=("$device")
-        fi
-        total_tps[$device]=$(echo "${total_tps[$device]:-0} + $tps" | bc)
-        total_kB_read_per_s[$device]=$(echo "${total_kB_read_per_s[$device]:-0} + $kB_read_per_s" | bc)
-        total_kB_wrtn_per_s[$device]=$(echo "${total_kB_wrtn_per_s[$device]:-0} + $kB_wrtn_per_s" | bc)
-        count_tps[$device]=$((count_tps[$device] + 1))
-    done <<< "$output"
-done
+# Получаем вывод команды iostat -x для %util
+util_output=$(iostat -x 1 1 | awk '/^nvme/ {print $1, $23}') # $23 соответствует %util
 
 # Выводим заголовок таблицы
-printf "%-15s %-10s %-12s %-12s %-12s\n" "Device" "tps" "kB_read/s" "kB_wrtn/s" "tps*(r+w)"
+printf "%-15s %-10s %-12s %-12s %-12s %-12s\n" "Device" "tps" "kB_read/s" "kB_wrtn/s" "tps*(r+w)" "%util"
 
-# Выводим средние данные для каждого nvme устройства в порядке их появления
-for device in "${devices[@]}"; do
-    average_tps=$(echo "scale=2; ${total_tps[$device]} / ${count_tps[$device]}" | bc)
-    average_kB_read_per_s=$(echo "scale=2; ${total_kB_read_per_s[$device]} / ${count_tps[$device]}" | bc)
-    average_kB_wrtn_per_s=$(echo "scale=2; ${total_kB_wrtn_per_s[$device]} / ${count_tps[$device]}" | bc)
-
+# Читаем значения для каждого nvme устройства
+while read -r device tps kB_read_per_s kB_wrtn_per_s; do
     # Рассчитываем tps*(r+w)
-    tps_rw=$(echo "scale=2; $average_tps * ($average_kB_read_per_s + $average_kB_wrtn_per_s)" | bc)
+    tps_rw=$(echo "scale=2; $tps * ($kB_read_per_s + $kB_wrtn_per_s)" | bc)
 
     # Делим на 100000 и округляем до целого числа
     tps_rw_rounded=$(printf "%.0f" $(echo "$tps_rw / 100000" | bc))
 
-    printf "%-15s %-10s %-12s %-12s %-12s\n" "$device" "$average_tps" "$average_kB_read_per_s" "$average_kB_wrtn_per_s" "$tps_rw_rounded"
-done
+    # Извлекаем %util для текущего устройства
+    util=$(echo "$util_output" | awk -v dev="$device" '$1 == dev {print $2}')
+
+    printf "%-15s %-10s %-12s %-12s %-12s %-12s\n" "$device" "$tps" "$kB_read_per_s" "$kB_wrtn_per_s" "$tps_rw_rounded" "$util"
+done <<< "$output"
