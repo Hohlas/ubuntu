@@ -13,13 +13,12 @@ swapon --show # check current SWAP size
 ```
 ```bash
 # create & format partition #
-DEVICE="/dev/nvme0n1p1"
-fdisk ${DEVICE} #
+fdisk /dev/nvme0n1
   # d - delete 
   # n - create
   # w - write changes
-mkfs.xfs "${DEVICE}" # mkfs.ext4 "${DEVICE}"
-UUID=$(blkid -s UUID -o value "$DEVICE")
+mkfs.xfs /dev/nvme0n1p1 # mkfs.ext4 /dev/nvme0n1p1
+UUID=$(blkid -s UUID -o value /dev/nvme0n1p1)
 echo "UUID=$UUID $MOUNT_POINT xfs defaults 0 0" | sudo tee -a /etc/fstab
 sudo mount -a
 ```
