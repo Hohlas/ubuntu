@@ -17,7 +17,7 @@ while read -r device tps kB_read_per_s kB_wrtn_per_s; do
     tps_rw=$(echo "scale=2; $tps * ($kB_read_per_s + $kB_wrtn_per_s)" | bc)
 
     # Делим на 100000 и округляем до целого числа
-    tps_rw_rounded=$(printf "%.0f" $(echo "$tps_rw / 100000" | bc))
+    tps_rw_rounded=$(printf "%.0f" $(echo "$tps_rw / 10000" | bc))
 
     # Извлекаем %util для текущего устройства
     util=$(echo "$util_output" | awk -v dev="$device" '$1 == dev {print $2}')
