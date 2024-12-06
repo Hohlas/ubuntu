@@ -1,11 +1,13 @@
 ## create and mount partitions
 ```bash
-mkdir -p /mnt/keys
-chmod 600 /mnt/keys 
 echo "# KEYS to RAMDISK 
 tmpfs /mnt/keys tmpfs nodev,nosuid,noexec,nodiratime,size=1M 0 0" | sudo tee -a /etc/fstab
-mount /mnt/keys 
+mkdir -p /mnt/keys; chmod 600 /mnt/keys; mount /mnt/keys
 ln -sf /mnt/keys ~/keys
+
+echo "# RAMDISK 
+tmpfs /mnt/ramdisk tmpfs nodev,nosuid,noexec,nodiratime 0 0" | sudo tee -a /etc/fstab
+mkdir -p /mnt/ramdisk; chmod 600 /mnt/ramdisk; mount /mnt/ramdisk
 ```
 ```bash
 lsblk -f # check MOUNTPOINTS
