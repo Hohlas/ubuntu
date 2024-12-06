@@ -47,7 +47,7 @@ mkfs."$FILE_SYSTEM" "$MAIN_PART"
 
 SWAP_UUID=$(sudo blkid -s UUID -o value $SWAP_PART)
 MAIN_UUID=$(sudo blkid -s UUID -o value $MAIN_PART)
-printf "\n\n" | sudo tee -a /etc/fstab  # добавление пустых строк
+echo "# "
 echo "UUID=$SWAP_UUID none swap sw,pri=1 0 0" | sudo tee -a /etc/fstab
 echo "UUID=$MAIN_UUID $MOUNT_POINT $FILE_SYSTEM defaults 0 0" | sudo tee -a /etc/fstab
 
