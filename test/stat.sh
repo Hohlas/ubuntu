@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# echo "  - iostat single request with tps_rw_rounded and %util -"
+ echo "  - iostat.v2 second request -"
 
 # Получаем вывод команды iostat -d для nvme устройств
 output=$(iostat -d 1 2 | awk '/^Device/{count++; if (count == 2) {found=1; next}} found && /^nvme/{print $1, $2, $3, $4}')
