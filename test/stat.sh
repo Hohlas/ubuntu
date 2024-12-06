@@ -1,6 +1,6 @@
 #!/bin/bash
 
- echo "  - iostat.v2 second request -"
+ echo "  - iostat.v2 second request, measured 5 seconds -"
 
 # Получаем вывод команды iostat -d для nvme устройств
 output=$(iostat -d 5 2 | awk '/^Device/{count++; if (count == 2) {found=1; next}} found && /^nvme/{print $1, $2, $3, $4}')
