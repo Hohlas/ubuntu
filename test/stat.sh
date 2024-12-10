@@ -14,8 +14,8 @@ printf "%-10s %-8s %-8s %-8s\n" "Device" "%util" "rMB/s" "wMB/s"
 while read -r device util rkbs wkbs; do
     # Округляем значение util до целого числа
     util_rounded=$(printf "%.0f" "$util")
-    # Округляем rkbs и wkbs до мегабайт
-    rkbs_rounded=$(printf "%.0f" "$(echo "$rkbs / 1024" | bc -l)")
-    wkbs_rounded=$(printf "%.0f" "$(echo "$wkbs / 1024" | bc -l)")
+    # Округляем rkbs и wkbs до десятых
+    rkbs_rounded=$(printf "%.1f" "$(echo "$rkbs / 1024" | bc -l)")
+    wkbs_rounded=$(printf "%.1f" "$(echo "$wkbs / 1024" | bc -l)")
     printf "%-10s %-8s %-8s %-8s\n" "$device" "$util_rounded" "$rkbs_rounded" "$wkbs_rounded"
 done <<< "$util_output"
