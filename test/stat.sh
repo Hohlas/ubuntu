@@ -2,7 +2,7 @@
 
 # Устанавливаем интервал измерения (по умолчанию 1 секунда)
 interval=${1:-1}
-echo "  - iostat.v3 second request, measured for $interval sec -"
+echo "  - iostat.v4: second request, measured for $interval sec -"
 
 # Получаем вывод команды iostat -x для %util
 util_output=$(iostat -x "$interval" 2 | awk '/^Device/{count++; if (count == 2) {found=1; next}} found && /^nvme/ {print $1, $23, $3, $9}') # $23 соответствует %util, $3 - rkB/s, $9 - wkB/s
