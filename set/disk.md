@@ -3,12 +3,14 @@
 echo "# RAMDISK 
 tmpfs /mnt/ramdisk tmpfs nodev,nosuid,noexec,nodiratime 0 0" | sudo tee -a /etc/fstab
 mkdir -p /mnt/ramdisk; mount /mnt/ramdisk
+mount | grep tmpfs # show RAM mounted disks
 ```
 ```bash
 echo "# keys to RAM  
 tmpfs /mnt/keys tmpfs nodev,nosuid,noexec,nodiratime,size=1M 0 0" | sudo tee -a /etc/fstab
 mkdir -p /mnt/keys; mount /mnt/keys
-ln -sf /mnt/keys "$HOME/keys" 	
+ln -sf /mnt/keys "$HOME/keys"
+mount | grep tmpfs # show RAM mounted disks
 ```
 ```bash
 # for 2 disk config
