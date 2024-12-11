@@ -6,6 +6,11 @@ mkdir -p /mnt/ramdisk; mount /mnt/ramdisk
 mkdir -p /mnt/ramdisk/keys; ln -sf /mnt/ramdisk/keys "$HOME/keys"
 ```
 ```bash
+# for 2 disk config
+umount /mnt/disk2; ln -sf /mnt/disk1 /mnt/disk2
+rm /mnt/ramdisk/accounts_index; ln -sf /mnt/disk3 /mnt/ramdisk/accounts_index
+```
+```bash
 lsblk -f # check MOUNTPOINTS
 swapon --show # check current SWAP size
 ```
