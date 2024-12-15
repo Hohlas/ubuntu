@@ -30,9 +30,11 @@ fdisk /dev/nvme0n1
   # n - create
   # w - write changes
 mkfs.xfs /dev/nvme0n1p1 # mkfs.ext4 /dev/nvme0n1p1
-UUID=$(blkid -s UUID -o value /dev/nvme0n1p1)
-echo "UUID=$UUID $MOUNT_POINT xfs defaults 0 0" | sudo tee -a /etc/fstab
-sudo mount -a
+echo "UUID=... /mnt/disk1 xfs defaults 0 0" | sudo tee -a /etc/fstab
+
+mkswap /dev/nvme0n1p2
+echo "UUID=... none swap sw,pri=1 0 0" | sudo tee -a /etc/fstab
+mount -a
 ```
 ### Create SWAP & Partition
 ```bash
