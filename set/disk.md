@@ -60,7 +60,7 @@ mkswap $SWAP_PART
 echo "create $FILE_SYSTEM partition"
 parted -a optimal $DEVICE mkpart primary $FILE_SYSTEM ${SWAP_SIZE}G 100%
 MAIN_PART="${DEVICE}p2"
-mkfs."$FILE_SYSTEM" "$MAIN_PART"
+mkfs."$FILE_SYSTEM" -f "$MAIN_PART"
 #mke2fs -t ext4 -O ^has_journal "$MAIN_PART" # без журналирования
 
 SWAP_UUID=$(sudo blkid -s UUID -o value $SWAP_PART)
