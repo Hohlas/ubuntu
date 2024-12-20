@@ -43,7 +43,7 @@ mount -a
 DEVICE="/dev/nvme1n1"; MOUNT_POINT="/mnt/disk1"  #
 DEVICE="/dev/nvme0n1"; MOUNT_POINT="/mnt/disk2"  # 
 DEVICE="/dev/nvme3n1"; MOUNT_POINT="/mnt/disk3" 
-FILE_SYSTEM="ext4" # FILE_SYSTEM="xfs"
+FILE_SYSTEM="xfs" # FILE_SYSTEM="ext4" # 
 SWAP_SIZE=100 # required SWAP size
 ```
 ```bash
@@ -60,8 +60,8 @@ mkswap $SWAP_PART
 echo "create $FILE_SYSTEM partition"
 parted -a optimal $DEVICE mkpart primary $FILE_SYSTEM ${SWAP_SIZE}G 100%
 MAIN_PART="${DEVICE}p2"
-#mkfs."$FILE_SYSTEM" "$MAIN_PART"
-mke2fs -t ext4 -O ^has_journal "$MAIN_PART" # без журналирования
+mkfs."$FILE_SYSTEM" "$MAIN_PART"
+#mke2fs -t ext4 -O ^has_journal "$MAIN_PART" # без журналирования
 
 SWAP_UUID=$(sudo blkid -s UUID -o value $SWAP_PART)
 MAIN_UUID=$(sudo blkid -s UUID -o value $MAIN_PART)
