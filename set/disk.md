@@ -1,7 +1,7 @@
 ## create and mount partitions
 ```bash
 echo "# RAMDISK 
-tmpfs /mnt/ramdisk tmpfs nodev,nosuid,noexec,nodiratime 0 0" | sudo tee -a /etc/fstab
+tmpfs /mnt/ramdisk tmpfs nodiratime,size=750G 0 0" | sudo tee -a /etc/fstab
 mkdir -p /mnt/ramdisk; mount /mnt/ramdisk
 mount | grep tmpfs # show RAM mounted disks
 ```
