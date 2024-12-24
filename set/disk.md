@@ -1,7 +1,7 @@
 ## create and mount partitions
 ```bash
 echo "# RAMDISK 
-tmpfs /mnt/ramdisk tmpfs nodiratime,size=750G 0 0" | sudo tee -a /etc/fstab
+tmpfs /mnt/ramdisk tmpfs nodev,nosuid,noexec,nodiratime,size=750G 0 0" | sudo tee -a /etc/fstab
 mkdir -p /mnt/ramdisk; mount /mnt/ramdisk
 mount | grep tmpfs # show RAM mounted disks
 ```
@@ -22,8 +22,16 @@ rm /mnt/ramdisk/accounts_index
 ln -sf /mnt/disk3 /mnt/ramdisk/accounts_index
 ```
 ```bash
+# ledger 2 RAM disk
+mkdir -p /mnt/ramdisk/ledger
+rm -r $HOME/solana/ledger
+ln -sf /mnt/ramdisk/ledger $HOME/solana/ledger
+mkdir /mnt/snapshots
+```
+```bash
 lsblk -f # check MOUNTPOINTS
 swapon --show # check current SWAP size
+du -h
 ```
 ```bash
 # create & format partition #
