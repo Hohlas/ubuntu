@@ -11,4 +11,4 @@ source $HOME/.bashrc
 ```bash
 $HOME/stat.sh
 ```
-
+[solana setup](https://github.com/Hohlas/solana/tree/main/setup#readme)
