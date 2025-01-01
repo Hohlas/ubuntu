@@ -2,14 +2,23 @@
 ```bash
 echo "# RAMDISK 
 tmpfs /mnt/ramdisk tmpfs nodev,nosuid,noexec,nodiratime,size=750G 0 0" | sudo tee -a /etc/fstab
-mkdir -p /mnt/ramdisk; mount /mnt/ramdisk
-mount | grep tmpfs # show RAM mounted disks
+mkdir -p /mnt/ramdisk;
+mount /mnt/ramdisk
 ```
 ```bash
-echo "# keys to RAM  
+echo "# keys 2 RAM  
 tmpfs /mnt/keys tmpfs nodev,nosuid,noexec,nodiratime,size=1M 0 0" | sudo tee -a /etc/fstab
-mkdir -p /mnt/keys; mount /mnt/keys
+mkdir -p /mnt/keys;
+mount /mnt/keys
 ln -sf /mnt/keys "$HOME/keys"
+```
+```bash
+echo "# snapshots 2 RAM 
+tmpfs /mnt/snapshots tmpfs nodev,nosuid,noexec,nodiratime,size=200G 0 0" | sudo tee -a /etc/fstab
+mkdir -p /mnt/snapshots; 
+mount /mnt/snapshots
+```
+```bash
 mount | grep tmpfs # show RAM mounted disks
 ```
 ```bash
