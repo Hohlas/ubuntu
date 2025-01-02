@@ -12,12 +12,7 @@ mkdir -p /mnt/keys;
 mount /mnt/keys
 ln -sf /mnt/keys "$HOME/keys"
 ```
-```bash
-echo "# snapshots 2 RAM 
-tmpfs /mnt/snapshots tmpfs nodev,nosuid,noexec,nodiratime,size=200G 0 0" | sudo tee -a /etc/fstab
-mkdir -p /mnt/snapshots; 
-mount /mnt/snapshots
-```
+
 ```bash
 mount | grep tmpfs # show RAM mounted disks
 ```
@@ -33,6 +28,7 @@ ln -sf /mnt/disk3 /mnt/ramdisk/accounts_index
 ```bash
 # ledger 2 RAM disk
 mkdir -p /mnt/ramdisk/ledger
+mkdir -p /mnt/ramdisk/snapshots
 rm -r $HOME/solana/ledger
 ln -sf /mnt/ramdisk/ledger $HOME/solana/ledger
 mkdir /mnt/snapshots
