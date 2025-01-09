@@ -29,6 +29,7 @@ ln -sf /mnt/disk3 /mnt/ramdisk/accounts_index
 # ledger 2 RAM disk
 mkdir -p /mnt/ramdisk/ledger
 mkdir -p /mnt/ramdisk/snapshots
+mkdir -p $HOME/solana
 rm -r $HOME/solana/ledger
 ln -sf /mnt/ramdisk/ledger $HOME/solana/ledger
 ```
