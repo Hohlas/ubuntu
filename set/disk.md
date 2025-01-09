@@ -31,7 +31,6 @@ mkdir -p /mnt/ramdisk/ledger
 mkdir -p /mnt/ramdisk/snapshots
 rm -r $HOME/solana/ledger
 ln -sf /mnt/ramdisk/ledger $HOME/solana/ledger
-mkdir /mnt/snapshots
 ```
 ```bash
 lsblk -f # check MOUNTPOINTS
