@@ -28,6 +28,7 @@ ln -sf /mnt/disk1/2 /mnt/disk2
 rm /mnt/ramdisk/accounts_index
 ln -sf /mnt/disk3 /mnt/ramdisk/accounts_index
 ```
+---
 </details>
 	
 
