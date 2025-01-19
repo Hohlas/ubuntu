@@ -12,7 +12,7 @@ mkdir -p /mnt/keys;
 mount /mnt/keys
 ln -sf /mnt/keys "$HOME/keys"
 ```
---
+
 ```bash
 mount | grep tmpfs # show RAM mounted disks
 ```
@@ -31,6 +31,16 @@ ln -sf /mnt/disk3 /mnt/ramdisk/accounts_index
 ---
 </details>
 	
+<details>
+<summary>3 disk config</summary>
+
+```bash
+mkdir -p /mnt/disk1
+mkdir -p /mnt/disk2
+mkdir -p /mnt/disk3
+```
+---
+</details>
 
 ```bash
 # ledger 2 RAM disk
