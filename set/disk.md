@@ -42,14 +42,20 @@ mkdir -p /mnt/disk3
 ---
 </details>
 
+<details>
+<summary>ledger 2 RAM </summary>
+
 ```bash
-# ledger 2 RAM disk
 mkdir -p /mnt/ramdisk/ledger
 # mkdir -p /mnt/ramdisk/snapshots
 mkdir -p $HOME/solana
 rm -r $HOME/solana/ledger
 ln -sf /mnt/ramdisk/ledger $HOME/solana/ledger
 ```
+---
+</details>
+
+
 ```bash
 lsblk -f # check MOUNTPOINTS
 swapon --show # check current SWAP size
