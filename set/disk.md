@@ -12,7 +12,7 @@ mkdir -p /mnt/keys;
 mount /mnt/keys
 ln -sf /mnt/keys "$HOME/keys"
 ```
-
+--
 ```bash
 mount | grep tmpfs # show RAM mounted disks
 ```
