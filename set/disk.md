@@ -36,6 +36,7 @@ ln -sf /mnt/disk3 /mnt/ramdisk/accounts_index
 <summary>3 disk config</summary>
 
 ```bash
+mkdir -p ~/solana
 mkdir -p /mnt/disk1
 mkdir -p /mnt/disk2
 mkdir -p /mnt/disk3
