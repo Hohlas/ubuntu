@@ -4,6 +4,7 @@ echo "# RAMDISK
 tmpfs /mnt/ramdisk tmpfs rw,size=1000G 0 0" | sudo tee -a /etc/fstab
 mkdir -p /mnt/ramdisk;
 mount /mnt/ramdisk
+mkdir -p ~/solana
 ```
 ```bash
 echo "# keys 2 RAM  
