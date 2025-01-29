@@ -25,9 +25,8 @@ mount | grep tmpfs # show RAM mounted disks
 <summary>2 disk config</summary>
 
 ```bash
-umount /mnt/disk2;
-rm -r /mnt/disk2
 mkdir -p /mnt/disk1/2
+mkdir -p /mnt/disk3
 ln -sf /mnt/disk1/2 /mnt/disk2
 rm /mnt/ramdisk/accounts_index
 ln -sf /mnt/disk3 /mnt/ramdisk/accounts_index
