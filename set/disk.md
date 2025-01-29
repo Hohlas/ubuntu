@@ -1,19 +1,22 @@
 ## create and mount partitions
+
 ```bash
 echo "# RAMDISK 
 tmpfs /mnt/ramdisk tmpfs rw,size=1000G 0 0" | sudo tee -a /etc/fstab
 mkdir -p /mnt/ramdisk;
-mount /mnt/ramdisk
-mkdir -p ~/solana
 ```
 ```bash
 echo "# keys 2 RAM  
 tmpfs /mnt/keys tmpfs nodev,nosuid,noexec,nodiratime,size=1M 0 0" | sudo tee -a /etc/fstab
 mkdir -p /mnt/keys;
-mount /mnt/keys
 ln -sf /mnt/keys "$HOME/keys"
 ```
-
+```bash
+mkdir -p ~/solana  # ln -sf /mnt/disk2/ledger ~/solana
+mkdir -p /mnt/snapshots
+mkdir -p /mnt/ramdisk
+mount -a
+```
 ```bash
 mount | grep tmpfs # show RAM mounted disks
 ```
