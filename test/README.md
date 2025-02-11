@@ -1,6 +1,6 @@
 
 
-### iostat
+## iostat
 ```bash
 apt install sysstat -y
 curl https://raw.githubusercontent.com/Hohlas/ubuntu/main/test/stat.sh > $HOME/stat.sh
@@ -11,7 +11,7 @@ source $HOME/.bashrc
 ```bash
 $HOME/stat.sh
 ```
-### memory test
+## memory test
 ```bash
 apt update && apt install python3 python3-pip -y 
 pip3 install psutil
