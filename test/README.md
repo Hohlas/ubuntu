@@ -18,10 +18,12 @@ pip3 install psutil
 
 mkdir -p ~/memory_test
 curl https://raw.githubusercontent.com/Hohlas/ubuntu/main/test/memory_test.py > ~/memory_test/memory_test.py
-chmod +x ~/memory_test/memory_test.py 
+curl https://raw.githubusercontent.com/Hohlas/ubuntu/main/test/vmstat.sh > ~/memory_test/vmstat.sh
+chmod +x ~/memory_test/memory_test.py ~/memory_test/vmstat.sh
 ```
 ```bash
 ~/memory_test/memory_test.py
+~/memory_test/vmstat.sh
 ```
 ```bash
 # add to cron
