@@ -5,10 +5,13 @@ from datetime import datetime
 import json
 import psutil
 import time
+import os
 
 class SolanaMemoryAnalyzer:
     def __init__(self, log_file="memory_stats.json"):
-        self.log_file = log_file
+        script_dir = os.path.dirname(os.path.abspath(__file__)) # абсолютный путь к директории скрипта
+        self.log_file = os.path.join(script_dir, log_file) # Объединяем путь к директории с именем файла лога
+        print(f"Log file path: {self.log_file}")
         
     def get_solana_process_info(self):
         solana_processes = []
