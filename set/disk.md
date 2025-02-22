@@ -29,7 +29,8 @@ mkdir -p /mnt/disk1/2
 mkdir -p /mnt/disk3
 ln -sf /mnt/disk1/2 /mnt/disk2
 if [ -d "/mnt/ramdisk/accounts_index" ]; then rm -r "/mnt/ramdisk/accounts_index"; fi
-ln -sf /mnt/disk3 /mnt/ramdisk/accounts_index
+ln -sfn /mnt/disk3 /mnt/ramdisk/accounts_index
+ln -sfn $HOME/solana/ledger/ /mnt/ramdisk/ledger
 ```
 ---
 </details>
@@ -42,6 +43,7 @@ mkdir -p ~/solana
 mkdir -p /mnt/disk1
 mkdir -p /mnt/disk2
 mkdir -p /mnt/disk3
+ln -sfn $HOME/solana/ledger/ /mnt/ramdisk/ledger
 ```
 ---
 </details>
@@ -52,7 +54,7 @@ mkdir -p /mnt/disk3
 ```bash
 mkdir -p /mnt/ramdisk/ledger
 if [ -d "~/solana/ledger" ]; then rm -r "~/solana/ledger"; fi
-ln -sf /mnt/ramdisk/ledger $HOME/solana/ledger
+ln -sfn /mnt/ramdisk/ledger $HOME/solana/ledger
 ```
 ---
 </details>
