@@ -16,6 +16,7 @@ mkdir -p ~/solana  # ln -sf /mnt/disk2/ledger ~/solana
 mkdir -p /mnt/snapshots
 mkdir -p /mnt/ramdisk
 mount -a
+# mount -o remount /mnt/ramdisk # ramdisk remount
 ```
 ```bash
 mount | grep tmpfs # show RAM mounted disks
