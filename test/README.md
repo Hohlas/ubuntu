@@ -9,8 +9,11 @@ echo "alias stat='source ~/stat.sh'" >> $HOME/.bashrc
 source $HOME/.bashrc
 ```
 ```bash
-$HOME/stat.sh
+stat 15 # статистика за 15 секунд
 ```
+![image](https://github.com/user-attachments/assets/45261b05-3fb3-4dc1-aff2-953b5d04769b)
+
+
 ## memory test
 ```bash
 apt update && apt install python3 python3-pip -y 
