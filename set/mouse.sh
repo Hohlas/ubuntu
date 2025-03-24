@@ -20,6 +20,11 @@ cat << 'EOF' >> ~/.xbindkeysrc
 # Вставить (Shift+Insert) на кнопку 9
 "xte 'keydown Shift_L' 'key Insert' 'keyup Shift_L'"
   b:9
+
+# Enter на кнопку 10
+"xte 'key Return'"
+  b:10
+  
 EOF
 
 # Перезапуск xbindkeys для применения изменений
