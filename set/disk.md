@@ -15,7 +15,6 @@ ln -sf /mnt/keys "$HOME/keys"
 mkdir -p ~/solana  # ln -sf /mnt/disk2/ledger ~/solana
 mkdir -p /mnt/snapshots
 mkdir -p /mnt/ramdisk
-mkdir -p /mnt/disk3
 mount -a
 # mount -o remount /mnt/ramdisk # ramdisk remount
 ```
@@ -54,7 +53,6 @@ ln -sfn $HOME/solana/ledger/ /mnt/ramdisk/ledger
 <summary>ledger 2 RAM </summary>
 
 ```bash
-mkdir -p /mnt/disk3
 mkdir -p /mnt/ramdisk/ledger
 if [ -d "~/solana/ledger" ]; then rm -r "~/solana/ledger"; fi
 ln -sfn /mnt/ramdisk/ledger $HOME/solana/ledger
