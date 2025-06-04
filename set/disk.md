@@ -82,7 +82,7 @@ mount -a
 ### Create SWAP & Partition
 ```bash
 DEVICE="/dev/nvme1n1"; MOUNT_POINT="/mnt/disk1"  #
-DEVICE="/dev/nvme0n1"; MOUNT_POINT="/mnt/disk2"  # 
+DEVICE="/dev/nvme2n1"; MOUNT_POINT="/mnt/disk2"  # 
 DEVICE="/dev/nvme3n1"; MOUNT_POINT="/mnt/disk3" 
 FILE_SYSTEM="xfs" # FILE_SYSTEM="ext4" # 
 SWAP_SIZE=100 # required SWAP size
