@@ -44,7 +44,7 @@ mkdir -p ~/solana
 mkdir -p /mnt/disk1
 mkdir -p /mnt/disk2
 mkdir -p /mnt/disk3
-ln -sfn $HOME/solana/ledger/ /mnt/ramdisk/ledger
+ln -sfn /mnt/disk3/ledger $HOME/solana/ledger
 ```
 ---
 </details>
