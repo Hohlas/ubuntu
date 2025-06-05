@@ -26,12 +26,10 @@ mount | grep tmpfs # show RAM mounted disks
 <summary>2 disk config</summary>
 
 ```bash
-mkdir -p /mnt/disk1/2
-mkdir -p /mnt/disk3
-ln -sf /mnt/disk1/2 /mnt/disk2
-if [ -d "/mnt/ramdisk/accounts_index" ]; then rm -r "/mnt/ramdisk/accounts_index"; fi
-ln -sfn /mnt/disk3 /mnt/ramdisk/accounts_index
-ln -sfn $HOME/solana/ledger/ /mnt/ramdisk/ledger
+mkdir -p ~/solana/ledger
+mkdir -p /mnt/disk1
+mkdir -p /mnt/disk2
+ln -sfn $HOME/solana/ledger /mnt/ramdisk/ledger
 ```
 ---
 </details>
